@@ -246,10 +246,17 @@ module MoneyTree
       ripemd160 hash
     end
 
-    def to_address(network: :bitcoin)
+    def to_address(network: :bitcoin, format: :p2pkh)
       hash = to_ripemd160
-      address = NETWORKS[network][:address_version] + hash
-      to_serialized_base58 address
+      case format
+      when :p2pkh
+        address = NETWORKS[network][:address_version] + hash
+        to_serialized_base58 address
+      when :p2wpkh
+        hrp = NETWORKS[network][:bech32_hrp]
+        raise "Invalid network" if hrp.nil?
+        to_serialized_bech32(hash, hrp: hrp)
+      end
     end
     alias :to_s :to_address
 
