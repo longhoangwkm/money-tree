@@ -6,7 +6,8 @@ require "money-tree/key"
 require "money-tree/address"
 require "money-tree/networks"
 require "money-tree/node"
+require 'money-tree/bech32'
 
 module MoneyTree
-  
+
 end

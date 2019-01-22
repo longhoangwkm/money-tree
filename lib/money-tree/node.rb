@@ -142,9 +142,16 @@ module MoneyTree
       end
     end
 
-    def to_address(compressed=true, network: :bitcoin)
-      address = NETWORKS[network][:address_version] + to_identifier(compressed)
-      to_serialized_base58 address
+    def to_address(compressed=true, network: :bitcoin, format: :p2pkh)
+      case format
+      when :p2pkh then
+        address = NETWORKS[network][:address_version] + to_identifier(compressed)
+        to_serialized_base58 address
+      when :p2wpkh
+        hrp = NETWORKS[network][:bech32_hrp]
+        raise "Invalid network" if hrp.nil?
+        to_serialized_bech32(hash160(public_key.to_hex), hrp: hrp)
+      end
     end
 
     def subnode(i = 0, opts = {})
