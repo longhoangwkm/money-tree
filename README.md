@@ -100,6 +100,9 @@ DO NOT use a user generated password. Keep in mind that whoever controls the see
 @master.to_address
 => "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"
 
+@master.to_address(network: :bitcoin, format: :p2wpkh)
+=> "bc1qx3ppj0smkuy3d6g525sh9n2w9k7fm7q3x30rtg"
+
 @master.private_key.to_hex
 => "e8f32e723decf4051aefac8e2c93c9c5b214313817cdb01a1494b917c8436b35"
 
