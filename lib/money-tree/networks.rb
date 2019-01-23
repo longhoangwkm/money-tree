@@ -47,6 +47,7 @@ module MoneyTree
           address_version: '8a',
           p2sh_version: '58',
           p2sh_char: '2',
+          bech32_hrp: 'txpc',
           privkey_version: 'ef',
           privkey_compression_flag: '01',
           extended_privkey_version: "04358394",

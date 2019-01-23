@@ -144,7 +144,7 @@ module MoneyTree
 
     def to_address(compressed=true, network: :bitcoin, format: :p2pkh)
       case format
-      when :p2pkh then
+      when :p2pkh
         address = NETWORKS[network][:address_version] + to_identifier(compressed)
         to_serialized_base58 address
       when :p2wpkh
