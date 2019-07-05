@@ -63,6 +63,12 @@ module MoneyTree
       return address.nil? ? nil : address
     end
 
+    # https://bitcoincore.org/en/segwit_wallet_dev/#creation-of-p2sh-p2wsh-address
+    def to_serialized_p2sh_p2wpkh(hex, prefix)
+      redeem_script = '0014' + hash160(hex) # 22 bytes redeemScript
+      to_serialized_base58(prefix + hash160(redeem_script))
+    end
+
     def from_serialized_base58(base58)
       hex = decode_base58 base58
       checksum = hex.slice!(-8..-1)

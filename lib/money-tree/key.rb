@@ -252,10 +252,14 @@ module MoneyTree
       when :p2pkh
         address = NETWORKS[network][:address_version] + hash
         to_serialized_base58 address
-      when :p2wpkh
+      when :bech32
         hrp = NETWORKS[network][:bech32_hrp]
         raise "Invalid network" if hrp.nil?
         to_serialized_bech32(hash, hrp: hrp)
+      when :p2sh_p2wpkh
+        hash = to_hex
+        prefix = NETWORKS[network][:p2sh_version]
+        to_serialized_p2sh_p2wpkh(hash, prefix)
       end
     end
     alias :to_s :to_address

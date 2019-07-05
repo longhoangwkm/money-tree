@@ -142,15 +142,23 @@ module MoneyTree
       end
     end
 
+    ##
+    # format:
+    #   - p2pkh (default)
+    #   - bech32
+    #   - p2sh_p2wpkh
     def to_address(compressed=true, network: :bitcoin, format: :p2pkh)
       case format
       when :p2pkh
         address = NETWORKS[network][:address_version] + to_identifier(compressed)
         to_serialized_base58 address
-      when :p2wpkh
+      when :bech32
         hrp = NETWORKS[network][:bech32_hrp]
         raise "Invalid network" if hrp.nil?
         to_serialized_bech32(hash160(public_key.to_hex), hrp: hrp)
+      when :p2sh_p2wpkh
+        prefix = NETWORKS[network][:p2sh_version]
+        to_serialized_p2sh_p2wpkh(public_key.to_hex, prefix)
       end
     end
 

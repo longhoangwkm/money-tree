@@ -122,15 +122,29 @@ describe MoneyTree::PublicKey do
     end
 
     it "is a valid bech32 bitcoin address" do
-      expect(@pub_key.to_address(network: :bitcoin, format: :p2wpkh)).to eq('bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4')
+      expect(@pub_key.to_address(network: :bitcoin, format: :bech32)).to eq('bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4')
     end
 
     it "is a valid bech32 bitcoin testnet address" do
-      expect(@pub_key.to_address(network: :bitcoin_testnet, format: :p2wpkh)).to eq('tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx')
+      expect(@pub_key.to_address(network: :bitcoin_testnet, format: :bech32)).to eq('tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx')
     end
 
     it "is a valid bech32 xpchain address" do
-      expect(@pub_key.to_address(network: :xpchain, format: :p2wpkh)).to eq('xpc1qw508d6qejxtdg4y5r3zarvary0c5xw7k94ck4t')
+      expect(@pub_key.to_address(network: :xpchain, format: :bech32)).to eq('xpc1qw508d6qejxtdg4y5r3zarvary0c5xw7k94ck4t')
+    end
+  end
+
+  describe "#to_address(format: :p2sh_p2wpkh)" do
+    before do
+      @pub_key = MoneyTree::PublicKey.new("0279BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
+    end
+
+    it "has 34 characters" do
+      expect(@pub_key.to_address(format: :p2sh_p2wpkh).length).to eql(34)
+    end
+
+    it "is a valid p2sh_p2wpkh bitcoin address" do
+      expect(@pub_key.to_address(format: :p2sh_p2wpkh)).to eql('3JvL6Ymt8MVWiCNHC7oWU6nLeHNJKLZGLN')
     end
   end
 
